@@ -14,7 +14,7 @@
                 <th class="border-0">Name</th>
                 <th class="border-0">Email</th>
                 <th class="border-0">Created At</th>
-                <th class="border-0 rounded-end">Action</th>
+                <th class="border-0 text-end">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -25,8 +25,11 @@
                         <td><?= esc($user['firstname'] . ' ' . $user['lastname']) ?></td>
                         <td><?= esc($user['email']) ?></td>
                         <td><?= esc($user['created_at']) ?></td>
-                        <td>
-                            <a href="<?= '/admin/user/' . $user['id'] . '/edit' ?>" class="btn btn-sm btn-primary">Edit</a>
+                        <td class="text-end">
+                            <div>
+                                <a href="<?= '/admin/user/' . $user['id'] . '/edit' ?>" class="btn btn-sm btn-primary">Edit</a>
+                                <a href="<?= '/admin/user/' . $user['id'] . '/delete' ?>" class="btn btn-sm btn-danger">Delete</a>
+                            </div>
                         </td>
                     </tr>
                 <?php endforeach; ?>

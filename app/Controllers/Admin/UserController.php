@@ -39,6 +39,20 @@ class UserController extends BaseController
         return view('admin/user/edit', compact('title', 'user'));
     }
 
+    public function delete($id)
+    {
+        $userModel = new User();
+        $user = $userModel->find($id);
+
+        if (!$user) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("User with ID $id not found");
+        }
+
+        $userModel->delete($id);
+
+        return redirect()->to('/admin/user/index')->with('success', 'User deleted successfully');
+    }
+
     public function update($id)
     {
         $userModel = new User();

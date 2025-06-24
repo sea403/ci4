@@ -10,5 +10,6 @@ SystemUtils::registerAdminRoutes($routes, function () use ($routes) {
     $routes->get('user/add', 'UserController::add');
     $routes->post('user/store', 'UserController::store');
     $routes->get('user/(:num)/edit', 'UserController::edit/$1');
+    $routes->get('user/(:num)/delete', 'UserController::delete/$1');
     $routes->post('user/(:num)/update', 'UserController::update/$1');
 }); 
