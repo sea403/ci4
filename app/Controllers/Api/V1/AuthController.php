@@ -4,18 +4,50 @@ namespace App\Controllers\Api\V1;
 
 use App\Models\User;
 use CodeIgniter\RESTful\ResourceController;
+use OpenApi\Attributes as OA;
 
+/**
+ * @OA\Tag(
+ *     name="Auth",
+ *     description="Authentication Endpoints"
+ * )
+ */
 class AuthController extends ResourceController
 {
-    public function __construct()
-    {
-        /** don't forget the load the helper */
-        helper('jwt');
-    }
-
     /**
-     * Register an user
-     * @return \CodeIgniter\HTTP\ResponseInterface
+     * @OA\Post(
+     *     path="/api/v1/register",
+     *     tags={"Auth"},
+     *     summary="Register a user",
+     *     description="This endpoint allows a user to register with email and password",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"email", "password"},
+     *             @OA\Property(property="email", type="string", example="user@example.com"),
+     *             @OA\Property(property="password", type="string", example="password123"),
+     *             @OA\Property(property="firstname", type="string", example="John"),
+     *             @OA\Property(property="lastname", type="string", example="Doe")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="201",
+     *         description="User registered successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean", example=true),
+     *             @OA\Property(property="user", type="object", ref="#/components/schemas/User"),
+     *             @OA\Property(property="token", type="string", example="your_jwt_token_here")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="400",
+     *         description="Invalid input",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean", example=false),
+     *             @OA\Property(property="error", type="object")
+     *         )
+     *     )
+     * )
      */
     public function register()
     {
@@ -73,13 +105,41 @@ class AuthController extends ResourceController
     }
 
     /**
-     * Login an user
-     * @return \CodeIgniter\HTTP\ResponseInterface
+     * @OA\Post(
+     *     path="/api/v1/login",
+     *     tags={"Auth"},
+     *     summary="Login a user",
+     *     description="This endpoint allows a user to log in with email and password",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"email", "password"},
+     *             @OA\Property(property="email", type="string", example="user@example.com"),
+     *             @OA\Property(property="password", type="string", example="password123")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="User logged in successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="user", type="object", ref="#/components/schemas/User"),
+     *             @OA\Property(property="token", type="string", example="your_jwt_token_here")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="401",
+     *         description="Invalid credentials",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean", example=false),
+     *             @OA\Property(property="error", type="string", example="Invalid credentials")
+     *         )
+     *     )
+     * )
      */
     public function login()
     {
         $rules = [
-            'email'    => 'required|valid_email',
+            'email' => 'required|valid_email',
             'password' => 'required',
         ];
 
@@ -91,7 +151,7 @@ class AuthController extends ResourceController
                     'error' => $this->validator->getErrors()
                 ]);
         }
-        
+
         $userModel = new User();
         $user = $userModel->where('email', $this->request->getPost('email'))->first();
 
@@ -105,8 +165,28 @@ class AuthController extends ResourceController
     }
 
     /**
-     * Get the profile of authenticated user
-     * @return \CodeIgniter\HTTP\ResponseInterface
+     * @OA\Get(
+     *     path="/api/v1/profile",
+     *     tags={"Auth"},
+     *     summary="Get the authenticated user's profile",
+     *     description="This endpoint returns the profile of the logged-in user",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Response(
+     *         response="200",
+     *         description="User profile retrieved successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="user", type="object", ref="#/components/schemas/User")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="401",
+     *         description="Unauthorized",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean", example=false),
+     *             @OA\Property(property="error", type="string", example="Unauthorized")
+     *         )
+     *     )
+     * )
      */
     public function profile()
     {
@@ -116,8 +196,8 @@ class AuthController extends ResourceController
         $user = $userModel->find($userId);
 
         /** hide the passowrd in the reponse */
-        unset($user['password']); 
-    
+        unset($user['password']);
+
         return $this->response->setJSON([
             'user' => $user
         ]);
