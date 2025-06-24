@@ -52,6 +52,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form method="POST" action="/admin/language/store">
+                <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
+                
                 <div class="modal-body">
                     <div class="form-group mb-3">
                         <label for="name"><?= lang('Labels.name') ?></label>

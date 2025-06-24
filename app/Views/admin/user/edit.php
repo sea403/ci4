@@ -7,6 +7,8 @@
 </div>
 
 <form method="POST" action="/admin/user/<?= $user['id'] ?>/update">
+    <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
+    
     <div class="row gy-4">
         <div class="col-lg-4 form-group">
             <label for="firstname" class="form-label"><?= lang('Labels.first_name') ?></label>
