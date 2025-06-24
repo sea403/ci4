@@ -35,7 +35,8 @@ class Filters extends BaseFilters
         'forcehttps'    => ForceHTTPS::class,
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
-        'jwt'           => JwtAuth::class
+        'jwt'           => JwtAuth::class,
+        'localefilter' => \App\Filters\LocaleFilter::class,
     ];
 
     /**
@@ -55,6 +56,7 @@ class Filters extends BaseFilters
         'before' => [
             'forcehttps', // Force Global Secure Requests
             'pagecache',  // Web Page Caching
+            'localefilter'
         ],
         'after' => [
             'pagecache',   // Web Page Caching
