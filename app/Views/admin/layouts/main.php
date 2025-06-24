@@ -21,7 +21,10 @@
   <link type="text/css" href="../../vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet" />
   <link type="text/css" href="../../vendor/notyf/notyf.min.css" rel="stylesheet" />
 
+  <link type="text/css" href="<?= base_url('css/all.min.css') ?>" rel="stylesheet" />
   <link type="text/css" href="<?= base_url('css/volt.css') ?>" rel="stylesheet" />
+
+  <?= $this->renderSection('styles') ?>
 </head>
 
 <body>
@@ -56,6 +59,8 @@
 
     <script src="<?= base_url('js/popper.min.js') ?>"></script>
 
+    <script src="<?= base_url('js/jquery.min.js') ?>"></script>
+
     <script src="<?= base_url('js/bootstrap.min.js') ?>"></script>
 
     <script async defer="defer" src="https://buttons.github.io/buttons.js"></script>
@@ -65,6 +70,8 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script src="<?= base_url('js/volt.js') ?>"></script>
+
+    <?= $this->renderSection('scripts') ?>
 </body>
 
 </html>
