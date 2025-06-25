@@ -4,7 +4,6 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use App\Models\LanguageModel;
-use App\Models\User;
 
 class LanguageController extends BaseController
 {

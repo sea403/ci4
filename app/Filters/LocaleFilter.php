@@ -10,7 +10,7 @@ class LocaleFilter implements FilterInterface
     {
         $session = session();
 
-        $locale = $session->get('locale') ?? 'vi';
+        $locale = $session->get('locale') ?? 'en';
 
         service('language')->setLocale($locale);
     }

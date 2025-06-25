@@ -6,6 +6,13 @@ use App\Controllers\BaseController;
 
 class SiteController extends BaseController
 {
+    public function changeLang($lang)
+    {
+        $session = session();
+        $session->set('locale', $lang);
+        return redirect()->back();
+    }
+    
     public function home()
     {
         return view('site/home');
@@ -14,7 +21,6 @@ class SiteController extends BaseController
     public function contact()
     {
         echo 'contact';
-        // return view('site/home');
     }
 
 

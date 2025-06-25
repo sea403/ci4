@@ -1,3 +1,9 @@
+<?php 
+    $languageModel = new App\Models\LanguageModel();
+    $languages = $languageModel->findAll();
+    $locale = session('locale') ?? 'en';
+?>
+
 <nav class="navbar navbar-top navbar-expand navbar-dashboard navbar-dark ps-0 pe-2 pb-0">
     <div class="container-fluid px-0">
         <div class="d-flex justify-content-between w-100" id="navbarSupportedContent">
@@ -18,7 +24,17 @@
                 <!-- / Search form -->
             </div>
             <!-- Navbar links -->
+             
             <ul class="navbar-nav align-items-center">
+                <!-- Language selector -->
+                <li class="nav-item dropdown mx-2">
+                    <select class="form-select form-select-sm" id="language-selector" onchange="changeLanguage(this.value)">
+                        <?php foreach($languages as $language): ?>
+                            <option value="<?= $language['code'] ?>" <?= $locale === $language['code'] ? 'selected' : '' ?>>🇬🇧 <?= $language['name'] ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </li>
+
                 <li class="nav-item dropdown">
                     <a class="nav-link text-dark notification-bell unread dropdown-toggle"
                         data-unread-notifications="true" href="#" role="button" data-bs-toggle="dropdown"
@@ -203,3 +219,10 @@
         </div>
     </div>
 </nav>
+
+<script>
+    function changeLanguage(lang) {
+        localStorage.setItem('preferred_language', lang);
+        window.location.href = "/change-lang/" + lang;
+    }
+</script>

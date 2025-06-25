@@ -1,14 +1,25 @@
 <?php
 
 return [
-    'welcome' => 'Welcome to my site',
-    'user' => 'User',
-    'user_list' => 'Users List',
-    'edit_user' => 'Edit User',
-    'first_name' => 'First Name',
-    'last_name' => 'Last Name',
-    'email_address' => 'Email Address',
-    'confirm_password' => 'Confirm Password',
-    'password' => 'Password (leave blank to keep unchanged)',
-    'update' => 'Update'
+    'welcome'          => 'Bienvenue',
+    'user'             => 'Utilisateur',
+    'user_list'        => 'Liste des Utilisateurs',
+    'edit_user'        => 'Modifier l\'Utilisateur',
+    'first_name'       => 'Prénom',
+    'last_name'        => 'Nom de Famille',
+    'email_address'    => 'Adresse Électronique',
+    'confirm_password' => 'Confirmer le Mot de Passe',
+    'password'         => 'Mot de Passe',
+    'update'           => 'Mettre à Jour',
+    'dashboard'        => 'Tableau de Bord',
+    'users'            => 'Utilisateurs',
+    'languages'        => 'Langues',
+    'settings'         => 'Paramètres',
+    'add_new_language' => 'Ajouter une Nouvelle Langue',
+    'edit_language'    => 'Modifier la Langue',
+    'name'             => 'Nom',
+    'code'             => 'Code',
+    'close'            => 'Fermer',
+    'save'             => 'Enregistrer',
+    'edit'             => 'Modifier'
 ];
