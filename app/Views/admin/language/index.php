@@ -2,8 +2,12 @@
 <?= $this->section('content') ?>
 
 <div class="align-items-center mb-3 d-flex justify-content-between">
-    <h2>Languages</h2>
-    <button class="btn addBtn btn-primary">Add New</button>
+    <h2><?= lang('Labels.languages') ?></h2>
+
+    <div>
+        <button class="btn copyKeywordsBtn btn-info"><?= lang('Labels.copy_keywords') ?></button>
+        <button class="btn addBtn btn-primary"><?= lang('Labels.add_new') ?></button>
+    </div>
 </div>
 
 <div class="table-responsive">
@@ -11,10 +15,10 @@
         <thead class="thead-light">
             <tr>
                 <th class="border-0 rounded-start">#</th>
-                <th class="border-0">Name</th>
-                <th class="border-0">Code</th>
-                <th class="border-0">Created At</th>
-                <th class="border-0 text-end">Action</th>
+                <th class="border-0"><?= lang('Labels.name') ?></th>
+                <th class="border-0"><?= lang('Labels.code') ?></th>
+                <th class="border-0"><?= lang('Labels.created_at') ?></th>
+                <th class="border-0 text-end"><?= lang('Labels.action') ?></th>
             </tr>
         </thead>
         <tbody>
@@ -37,13 +41,14 @@
                 <?php endforeach; ?>
             <?php else : ?>
                 <tr>
-                    <td colspan="100%" class="text-center">No languages found.</td>
+                    <td colspan="100%" class="text-center"><?= lang('Labels.no_languages_found') ?></td>
                 </tr>
             <?php endif; ?>
         </tbody>
     </table>
 </div>
 
+<!-- language crud modal -->
 <div class="modal fade" id="languageModal" tabindex="-1" aria-labelledby="languageModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -51,7 +56,7 @@
                 <h1 class="modal-title fs-5" id="languageModalLabel"><?= lang('Labels.add_new_language') ?></h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="POST" action="/admin/language/store">
+            <form enctype="multipart/form-data" method="POST" action="/admin/language/store">
                 <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
                 
                 <div class="modal-body">
@@ -63,6 +68,10 @@
                         <label for="code"><?= lang('Labels.code') ?></label>
                         <input type="text" class="form-control" name="code" value="<?= old('code') ?>">
                     </div>
+                    <div class="form-group">
+                        <label for="image"><?= lang('Labels.image') ?></label>
+                        <input type="file" class="form-control" name="image" />
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><?= lang('Labels.close') ?></button>
@@ -73,11 +82,58 @@
     </div>
 </div>
 
+<!-- keywords showing modal -->
+<div class="modal fade" id="keywordsModal" tabindex="-1" aria-labelledby="keywordsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="keywordsModalLabel"><?= lang('Labels.system_keywords') ?></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6">
+                        <textarea readonly class="form-control the-keywords"></textarea>
+                    </div>
+                    <div class="col-6">
+                        <textarea class="form-control the-values" readonly></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><?= lang('Labels.close') ?></button>
+            </div>
+    </div>
+</div>
+
 <?= $this->endSection() ?>
 
 <?= $this->section('scripts') ?>
 <script>
+    'use strict';
     (function($) {
+        function humanizeString(input) {
+            if (!input) return '';
+
+            let result = input.replace(/_/g, ' ');
+
+            result = result.replace(/([a-z])([A-Z])/g, '$1 $2');
+
+            return result.charAt(0).toUpperCase() + result.slice(1);
+        };
+        
+        $('.copyKeywordsBtn').on('click', function() {
+            $.get('/admin/language/keywords', (data, status) => {
+                const theKeywords = data?.keywords?.map(d => d.split('.')[1]).join('\n')
+                $('#keywordsModal').find('.the-keywords').val(theKeywords);
+                
+                const theValues = data?.keywords?.map(d => humanizeString(d.split('.')[1])).join('\n')
+                $('#keywordsModal').find('.the-values').val(theValues);
+
+                $('#keywordsModal').modal('show');
+            });
+        });
+        
         $('.addBtn').on('click', function() {
             $('.modal-title').text("<?= lang('Labels.add_new_language') ?>")
             var form = $('#languageModal').find('form')[0];
@@ -99,4 +155,12 @@
         });
     })(jQuery);
 </script>
+<?= $this->endSection() ?>
+
+<?= $this->section('styles') ?>
+    <style>
+        .the-keywords,.the-values {
+            min-height: 400px !important;
+        }
+    </style>
 <?= $this->endSection() ?>

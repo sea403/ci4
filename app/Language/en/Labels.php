@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'languages'        => 'Languages',
+    'add_new'          => 'Add New',
     'welcome'          => 'Welcome',
     'user'             => 'User',
     'user_list'        => 'User List',
@@ -13,13 +15,13 @@ return [
     'update'           => 'Update',
     'dashboard'        => 'Dashboard',
     'users'            => 'Users',
-    'languages'        => 'Languages',
     'settings'         => 'Settings',
     'add_new_language' => 'Add New Language',
-    'edit_language' => 'Edit Language',
+    'edit_language'    => 'Edit Language',
     'name'             => 'Name',
     'code'             => 'Code',
     'close'            => 'Close',
     'save'             => 'Save',
-    'edit' => 'Edit'
+    'edit'             => 'Edit',
+    'created_at'       => 'Created At',
 ];

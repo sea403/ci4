@@ -14,6 +14,7 @@ SystemUtils::registerAdminRoutes($routes, function () use ($routes) {
     $routes->post('user/(:num)/update', 'UserController::update/$1');
 
     $routes->get('language/index', 'LanguageController::index');
+    $routes->get('language/keywords', 'LanguageController::getLangKeywords');
     $routes->post('language/store', 'LanguageController::store');
     $routes->post('language/(:num)/update', 'LanguageController::update/$1');
 });

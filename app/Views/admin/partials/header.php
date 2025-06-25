@@ -2,6 +2,19 @@
     $languageModel = new App\Models\LanguageModel();
     $languages = $languageModel->findAll();
     $locale = session('locale') ?? 'en';
+
+    function getFlagEmoji($code) {
+        if($code == 'en') $code = 'GB';
+        if($code == 'hi') $code = 'IN';
+        
+        $code   = strtoupper($code);
+        $offset = 127397;
+        $emoji  = '';
+        foreach (str_split($code) as $char) {
+            $emoji .= mb_chr(ord($char) + $offset, 'UTF-8');
+        }
+        return $emoji;
+    }
 ?>
 
 <nav class="navbar navbar-top navbar-expand navbar-dashboard navbar-dark ps-0 pe-2 pb-0">
@@ -30,7 +43,9 @@
                 <li class="nav-item dropdown mx-2">
                     <select class="form-select form-select-sm" id="language-selector" onchange="changeLanguage(this.value)">
                         <?php foreach($languages as $language): ?>
-                            <option value="<?= $language['code'] ?>" <?= $locale === $language['code'] ? 'selected' : '' ?>>🇬🇧 <?= $language['name'] ?></option>
+                            <option value="<?= $language['code'] ?>" <?= $locale === $language['code'] ? 'selected' : '' ?>>
+                                <?= getFlagEmoji($language['code']) ?> <?= $language['name'] ?>
+                            </option>
                         <?php endforeach; ?>
                     </select>
                 </li>
