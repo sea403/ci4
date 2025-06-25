@@ -2,8 +2,11 @@
 <?= $this->section('content') ?>
 
 <div class="align-items-center mb-3 d-flex justify-content-between">
-    <h2>Users</h2>
-    <a href="/admin/user/add" class="btn btn-primary">Add New</a>
+    <h2><?= lang('Labels.users') ?></h2>
+    <a href="/admin/user/add" class="btn btn-primary">
+        <i class="fa fa-plus"></i>
+        <?= lang('Labels.add_new') ?>
+    </a>
 </div>
 
 <div class="table-responsive">
@@ -11,10 +14,10 @@
         <thead class="thead-light">
             <tr>
                 <th class="border-0 rounded-start">#</th>
-                <th class="border-0">Name</th>
-                <th class="border-0">Email</th>
-                <th class="border-0">Created At</th>
-                <th class="border-0 text-end">Action</th>
+                <th class="border-0"><?= lang('Labels.name') ?></th>
+                <th class="border-0"><?= lang('Labels.Email') ?></th>
+                <th class="border-0"><?= lang('Labels.created_at') ?></th>
+                <th class="border-0 text-end"><?= lang('Labels.Action') ?></th>
             </tr>
         </thead>
         <tbody>
@@ -27,15 +30,21 @@
                         <td><?= esc($user['created_at']) ?></td>
                         <td class="text-end">
                             <div>
-                                <a href="<?= '/admin/user/' . $user['id'] . '/edit' ?>" class="btn btn-sm btn-primary">Edit</a>
-                                <a href="<?= '/admin/user/' . $user['id'] . '/delete' ?>" class="btn btn-sm btn-danger">Delete</a>
+                                <a href="<?= '/admin/user/' . $user['id'] . '/edit' ?>" class="btn btn-sm btn-primary">
+                                    <i class="fa fa-pen"></i>
+                                    <?= lang('Labels.edit') ?>
+                                </a>
+                                <a href="<?= '/admin/user/' . $user['id'] . '/delete' ?>" class="btn btn-sm btn-danger">
+                                    <i class="fa fa-trash"></i>
+                                    <?= lang('Labels.delete') ?>
+                                </a>
                             </div>
                         </td>
                     </tr>
                 <?php endforeach; ?>
             <?php else : ?>
                 <tr>
-                    <td colspan="5" class="text-center">No users found.</td>
+                    <td colspan="5" class="text-center"><?= lang('Labels.no_users_found') ?></td>
                 </tr>
             <?php endif; ?>
         </tbody>

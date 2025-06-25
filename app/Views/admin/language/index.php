@@ -5,8 +5,11 @@
     <h2><?= lang('Labels.languages') ?></h2>
 
     <div>
-        <button class="btn copyKeywordsBtn btn-info"><?= lang('Labels.copy_keywords') ?></button>
-        <button class="btn addBtn btn-primary"><?= lang('Labels.add_new') ?></button>
+        <button class="btn copyKeywordsBtn btn-info">
+            <i class="fa fa-clipboard"></i>
+            <?= lang('Labels.copy_keywords') ?>
+        </button>
+        <button class="btn addBtn btn-primary"><i class="fa fa-plus"></i><?= lang('Labels.add_new') ?></button>
     </div>
 </div>
 
